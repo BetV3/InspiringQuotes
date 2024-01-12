@@ -16,7 +16,20 @@ const getRandomQuote = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+const getQuoteById = async (req, res) => {
+    // logic to get quote by id from the database
+    try {
+        const quote = await Quote.findOne({ id: req.params.id });
+        if (!quote) {
+            return res.status(404).send('No quote found');
+        }
+        res.json(quote);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
 
 module.exports = {
     getRandomQuote,
+    getQuoteById,
 };
