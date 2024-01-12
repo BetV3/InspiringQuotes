@@ -17,7 +17,8 @@ app.get('/v1/quotes', (req, res) => {
         { author: 'Author 2', quote: 'Quote 2', tags: 'tag2' },
     ]);
 });
-app.use('/v1/random', quotesRoutes);
+app.use('/v1/', quotesRoutes);
+
 
 app.listen(port, () => {
     console.log(`Running on port ${port}`);
