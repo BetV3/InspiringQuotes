@@ -1,8 +1,10 @@
 const Quote = require('../models/quote');
 
 
+
 const getRandomQuote = async (req, res) => {
     // logic to get random quote from the database
+    // handles the /random route
     try {
         const randomQuoteAggregate = await Quote.aggregate([
             { $sample: { size: 1 }}, 
@@ -18,8 +20,9 @@ const getRandomQuote = async (req, res) => {
 };
 const getQuoteById = async (req, res) => {
     // logic to get quote by id from the database
+    // function for the /id/:id route
     try {
-        const quote = await Quote.findOne({ id: req.params.id });
+        const quote = await Quote.findOne({ id: req.params.id}, {_id: 0, __v: 0} );
         if (!quote) {
             return res.status(404).send('No quote found');
         }
@@ -28,8 +31,21 @@ const getQuoteById = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+const getQuotesByLimit = async (req, res) => {
+    // handles the /:limit route
+    try {
+        const quotes = await Quote.find({}, {_id: 0, __v: 0}).limit(parseInt(req.params.limit));
+        if (!quotes) {
+            return res.status(404).send('No quote found');
+        }
+        res.json(quotes);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
 
 module.exports = {
     getRandomQuote,
     getQuoteById,
+    getQuotesByLimit,
 };
