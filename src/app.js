@@ -17,7 +17,7 @@ app.get('/v1/quotes', (req, res) => {
         { author: 'Author 2', quote: 'Quote 2', tags: 'tag2' },
     ]);
 });
-app.use('/v1/', quotesRoutes);
+app.use('/api/', quotesRoutes);
 
 
 app.listen(port, () => {
