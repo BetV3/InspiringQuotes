@@ -44,10 +44,25 @@ const getQuotesByLimit = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 }
+const search = async (req, res) => {
+    // handles the /search route
+    try {
+        if (req.query.quote) {
+            await getQuotesByString(req, res);
+            return;
+        } else if (req.query.author) {
+            await getQuotesByAuthor(req, res);
+            return;
+        }
+        res.status(404).send('Invalid search query. Please search by quote or author');
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
 const getQuotesByString = async (req, res) => {
     try {
-        console.log(req.query.search);
-        const quotes = await Quote.find({$text: {$search: req.query.search}}, {_id: 0, __v: 0});
+        const quotes = await Quote.find({quote: new RegExp(req.query.quote, 'i')}, {_id: 0, __v: 0});
         if (!quotes) {
             return res.status(404).send('No quote found');
         }
@@ -56,10 +71,20 @@ const getQuotesByString = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 }
-
+const getQuotesByAuthor = async (req, res) => {
+    try {
+        const quotes = await Quote.find({author: new RegExp(req.query.author, 'i')}, {_id: 0, __v: 0});
+        if (!quotes) {
+            return res.status(404).send('No quote found under that author');
+        }
+        res.json(quotes);
+        } catch (err) {
+            res.status(500).json({ message: err.message});
+        }
+    }
 module.exports = {
     getRandomQuote,
     getQuoteById,
     getQuotesByLimit,
-    getQuotesByString,
+    search,
 };
