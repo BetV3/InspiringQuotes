@@ -72,11 +72,11 @@ All endpoints handle errors, including:
    cd QuoteInspirationAPI
 2. Install dependencies:
    ```bash
-  npm install
+   npm install
 3. Start the Server:
-  ```bash
-  npm start
-**Technologies Used**
+   ```bash
+   npm start
+### Technologies Used
 - Node.js with Express.js: For server and API routes.
 - MongoDB with Mongoose: For Database management
 - JavaScript: Core Language used for API functionality
