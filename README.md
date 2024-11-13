@@ -2,9 +2,6 @@
 
 An API designed to provide inspiring quotes with various query options, such as retrieving random quotes, searching by author, and fetching quotes with specific keywords.
 
-### Summary for Resume
-> "Developed a secure, feature-rich API to retrieve, search, and display inspirational quotes, supporting efficient querying and multiple endpoint options."
-
 ---
 
 ## Features
